@@ -48,3 +48,16 @@ services:
         arguments: [~, AppBundle\Entity\BlogPost, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Blog post, group: SonataExample }
+
+    admin.planification.tast_category:
+        class: AppBundle\Admin\Planification\TaskCategoryAdmin
+        arguments: [~, AppBundle\Entity\Planification\TaskCategory, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Task Category, group: Planification }
+
+
+    admin.planification.task:
+        class: AppBundle\Admin\Planification\TaskAdmin
+        arguments: [~, AppBundle\Entity\Planification\Task, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Task, group: Planification }

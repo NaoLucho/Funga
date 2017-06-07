@@ -1,14 +1,14 @@
 <?php
 
-// src/AppBundle/Admin/BlogPostAdmin.php
-namespace AppBundle\Admin;
+// src/AppBundle/Admin/Planification/TaskAdmin.php
+namespace AppBundle\Admin\Planification;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper; //pour configureDatagridFilters
 
-class BlogPostAdmin extends AbstractAdmin
+class TaskAdmin extends AbstractAdmin
 {
     //Structure des blocks et définition des champs pour la création, l'affichage de l'element et son édition.
     protected function configureFormFields(FormMapper $formMapper)
@@ -18,17 +18,23 @@ class BlogPostAdmin extends AbstractAdmin
                 ->add('title', 'text')
                 ->add('body', 'textarea')
             ->end()
-            ->with('Category', array('class' => 'col-md-9'))
-                ->add('category', 'entity', array(
-                    'class' => 'AppBundle\Entity\Category',
-                    'choice_label' => 'name',
+            ->with('TaskCategory', array('class' => 'col-md-9'))
+                ->add('taskCategory', 'entity', array(
+                    'class' => 'AppBundle\Entity\Planification\TaskCategory',
+                    'choice_label' => 'category',
                 ))
+                ->add('color', 'sonata_type_color_selector')
+            ->end()
+            ->with('Owner', array('class' => 'col-md-9'))
+                ->add('assignedTo')
             ->end()
             ->with('Metadata', array('class' => 'col-md-9'))
-                ->add('draft')
-                ->add('createdAt', 'sonata_type_datetime_picker')
-                // or sonata_type_date_picker if you don't need the time
-                // ->add('createdAt', 'sonata_type_date_picker')
+                ->add('toDo')
+                ->add('createdAt', 'sonata_type_date_picker')
+                ->add('done')
+                ->add('doneAt', 'sonata_type_date_picker')
+                // or sonata_type_date_picker if you need the time
+                // ->add('createdAt', 'sonata_type_datetime_picker')
             ->end()
         ;
     }
@@ -38,9 +44,13 @@ class BlogPostAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('category.name')
-            ->add('draft')
+            ->add('taskCategory.category')
+            ->add('color')
+            ->add('assignedTo')
             ->add('createdAt')
+            ->add('toDo')
+            ->add('done')
+            ->add('doneAt')
         ;
     }
 
@@ -49,9 +59,9 @@ class BlogPostAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('title')
-            ->add('category', null, array(), 'entity', array(
-                'class'    => 'AppBundle\Entity\Category',
-                'choice_label' => 'name', // In Symfony2: 'property' => 'name'
+            ->add('taskCategory', null, array(), 'entity', array(
+                'class'    => 'AppBundle\Entity\Planification\TaskCategory',
+                'choice_label' => 'category', // In Symfony2: 'property' => 'name'
             ));
     }
 
@@ -73,7 +83,7 @@ class BlogPostAdmin extends AbstractAdmin
     {
         return $object instanceof BlogPost
             ? $object->getTitle()
-            : 'Blog Post'; // shown in the breadcrumb on the create view
+            : 'Task'; // shown in the breadcrumb on the create view
     }
 
 
