@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <!-- New datepicker admin  'SonataCoreBundle:Form:datepicker.html.twig'-->
+        <script type="text/javascript" src="path_to_jquery.min.js"></script>
+        <script type="text/javascript" src="/bundles/sonatacore/vendor/moment/min/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="path_to_bootstrap.min.js"></script>
+        <script type="text/javascript" src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" href="path_to_bootstrap.min.css" />
+        <link rel="stylesheet" href="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+        <!-- END New datepicker admin  'SonataCoreBundle:Form:datepicker.html.twig' -->
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
