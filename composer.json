@@ -12,14 +12,18 @@
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.5.9 || ^7.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/rest-bundle": "^2.2",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jolicode/gif-exception-bundle": "^1.3",
+        "nelmio/api-doc-bundle": "^2.13",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
         "sonata-project/admin-bundle": "^3.18",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "sonata-project/user-bundle": "dev-master",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
@@ -47,9 +51,6 @@
         ]
     },
     "config": {
-        "platform": {
-            "php": "5.5.9"
-        },
         "sort-packages": true
     },
     "extra": {
