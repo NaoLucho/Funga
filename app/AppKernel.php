@@ -33,6 +33,10 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle(),
 
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+
+            //https://sonata-project.org/bundles/user/master/doc/reference/api.html
+            //new FOS\RestBundle\FOSRestBundle(),
+            //new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

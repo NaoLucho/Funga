@@ -1,22 +1,110 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="../../favicon.ico"> -->
 
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+
+    {% block stylesheets %}
         <!-- New datepicker admin  'SonataCoreBundle:Form:datepicker.html.twig'-->
-        <script type="text/javascript" src="path_to_jquery.min.js"></script>
-        <script type="text/javascript" src="/bundles/sonatacore/vendor/moment/min/moment-with-locales.min.js"></script>
-        <script type="text/javascript" src="path_to_bootstrap.min.js"></script>
-        <script type="text/javascript" src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-        <link rel="stylesheet" href="path_to_bootstrap.min.css" />
-        <link rel="stylesheet" href="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+        <!--     <script type="text/javascript" src="path_to_jquery.min.js"></script> -->
+        <!-- <script type="text/javascript" src="/bundles/sonatacore/vendor/moment/min/moment-with-locales.min.js"></script> -->
+        <!--     <script type="text/javascript" src="path_to_bootstrap.min.js"></script> -->
+        <!-- <script type="text/javascript" src="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script> -->
+        <!--     <link rel="stylesheet" href="path_to_bootstrap.min.css" /> -->
+        <!-- <link rel="stylesheet" href="/bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" /> -->
         <!-- END New datepicker admin  'SonataCoreBundle:Form:datepicker.html.twig' -->
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+        <link href="{{ asset('css/base.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+</head>
+
+<body>
+
+    {% block navigation %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ path('index') }}">Funga</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{ path('home') }}">Home</a></li>
+                    <li class=""><a href="#">LOUIS</a></li>
+                    <li class=""><a href="#">AARON</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class=""><a href="#">Planification</a></li>
+                    <li class="">
+                        <p class="navbar-text">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            Connecté en tant que {{ app.user.username }}
+                            -</p>
+                            <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                        {% else %}
+                            <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                        {% endif %}
+
+                    </li>
+                    {% if is_granted("ROLE_SONATA_ADMIN") %}
+                    <li><a href="./admin">Admin</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="margin-top: 71px;"></div>
+    {% endblock %}
+
+    <section class="main-col">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                {% for flash_message in app.session.flashbag.get('notice') %}
+                    <div class="alert alert-success">{{flash_message}}</div>
+                {% endfor %}
+
+                {% for flash_message in app.session.flashbag.get('error') %}
+                    <div class="alert alert-danger">{{flash_message}}</div>
+                {% endfor %}
+                <!-- MAIN CONTENT: boby -->
+                {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <aside class="sidebar">
+        {% block sidebar %}DEFAULT SIDEBAR{% endblock %}
+    </aside>
+
+    <div id="footer">
+        {% block footer %}
+            Funga Website - created by Aaron and Louis
+        {% endblock %}
+    </div>
+
+
+    <!-- SCRIPT: JQUERY + BOOTSTRAP -->
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% block javascripts %}{% endblock %}
+</body>
 </html>
