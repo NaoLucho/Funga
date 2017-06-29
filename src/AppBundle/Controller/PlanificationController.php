@@ -5,29 +5,25 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+// use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
+use AppBundle\Entity\Planification\Task;
+
 
 class PlanificationController extends Controller
 {
     /**
-     * @Route("/TEST", name="indexTEST")
+     * @Route("/tasks", name="tasks")
      */
-    public function indexAction(Request $request)
+    public function getTasksAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
-    }
+        $tasks = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Planification\Task')
+                ->findAll();
 
-    /**
-     * @Route("/HH", name="H")
-     */
-    public function homeAction(Request $request)
-    {
-        // replace this example code with whatever you need
-        /*return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);*/
-        return $this->render('AppBundle:Home:defaultHome.html.twig');
+        return $this->render('AppBundle:Planification:getTasks.html.twig', array(
+            'tasks'           => $tasks
+        ));
     }
 }

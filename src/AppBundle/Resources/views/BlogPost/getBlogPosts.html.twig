@@ -1,0 +1,16 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block pageTitle %}BlogPosts{% endblock %}
+{% block body %}
+
+    <ul class="nav nav-pills nav-stacked">
+    {% for blogPost in listBlogPosts %}
+      <li>
+        <h3>{{ blogPost.title }}</h3>
+          <p>{{ blogPost.body }} </p>
+
+
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

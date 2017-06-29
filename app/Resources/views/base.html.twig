@@ -52,7 +52,7 @@
                     <li class=""><a href="#">AARON</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class=""><a href="#">Planification</a></li>
+                    <li class=""><a href="{{ path('tasks') }}">Planification</a></li>
                     <li class="">
                         <p class="navbar-text">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -75,7 +75,7 @@
     {% endblock %}
 
     <hgroup>
-        <h1>{% block pageTitle %}DEFAULT TITLE{% endblock %}</h1>
+        <h1>{% block pageTitle %}DEFAULT pageTitle{% endblock %}</h1>
     </hgroup>
     <section class="main-col">
         <div class="container">
@@ -95,7 +95,7 @@
         </div>
     </section>
     <aside class="sidebar">
-        {% block sidebar %}DEFAULT SIDEBAR{% endblock %}
+        {% block sidebar %}DEFAULT sidebar{% endblock %}
     </aside>
 
     <div id="footer">

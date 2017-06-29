@@ -18,6 +18,8 @@ framework:
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
+    # serializer:
+    #     enabled: true
     #serializer: { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -134,3 +136,19 @@ sonata_user:
     profile:
         default_avatar: 'bundles/sonatauser/default_avatar.png' # Default avatar displayed if user doesn't have one
 
+
+
+#sensio_framework_extra:
+#    view: { annotations: false }
+# sensio_framework_extra:
+#     request: { converters: true }
+#     view: { annotations: true }
+
+# fos_rest:
+#     body_converter:
+#         enabled: true
+#     view:
+#         view_response_listener: true
+#         formats: { json: true, xml: false, rss: false }
+#     serializer:
+#         serialize_null: true

@@ -1,0 +1,133 @@
+<?php
+namespace AppBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request; //Request from the frontend
+use Symfony\Component\HttpFoundation\Response; //to use Response::HTTP_NOT_FOUND
+use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les annotations
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Form\Type\BlogPostType;
+use AppBundle\Entity\BlogPost;
+
+class BlogPostController extends Controller
+{
+     /**
+     * @Rest\View(templateVar="listBlogPosts")
+     * @Rest\Get("/blogposts")
+     */
+    public function getBlogPostsAction(Request $request)
+    {
+        $listBlogPosts = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:BlogPost')
+                ->findAll();
+        /* @var $places Place[] */
+//USE FOSRestBundle View annotation
+        // Création d'une vue FOSRestBundle => PAS necessaire avec annotation View()
+        //$view = View::create($listBlogPosts);
+        //$view->setFormat('json');
+        return $listBlogPosts;
+//USE JSON FORMAT FOR RESPONSE:
+        // $formatted = [];
+        // foreach ($listBlogPosts as $blogPost) {
+        //     $formatted[] = [
+        //        'id' => $blogPost->getId(),
+        //        'title' => $blogPost->getTitle(),
+        //        'body' => $blogPost->getBody(),
+        //     ];
+        // }
+
+        // return new JsonResponse($formatted);
+//USE TEMPLATE FOR RENDER RESPONSE:
+        // return $this->render('AppBundle:BlogPost:listBlogPosts.html.twig', array(
+        //     'listBlogPosts'           => $listBlogPosts
+        // ));
+
+    }
+
+    /**
+     * @Rest\View(templateVar="blogPost")
+     * @Rest\Get("/blogposts/{id}")
+     */
+    public function getBlogPostAction(Request $request)
+    {
+        $blogPost = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:BlogPost')
+                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
+
+
+        // if (empty($blogPost)) {
+        //     return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+        // }
+
+
+        // $formatted[] = [
+        //    'id' => $blogPost->getId(),
+        //    'title' => $blogPost->getTitle(),
+        //    'body' => $blogPost->getBody(),
+        // ];
+
+
+        // return new JsonResponse($formatted);
+        return $blogPost;
+    }
+
+     /**
+     * @Rest\View(templateVar="blogPost")
+     * @Rest\Get("/blogposts/{id}/edit", name="blogpost_edit")
+     */
+    public function editBlogPostAction(Request $request)
+    {
+        $blogPost = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:BlogPost')
+                ->find($request->get('id')); // L'identifiant en tant que paramétre n'est plus nécessaire
+
+        $form = $this->createForm(BlogPostType::class, $blogPost);
+        // if (empty($blogPost)) {
+        //     return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
+        // }
+
+
+        // $formatted[] = [
+        //    'id' => $blogPost->getId(),
+        //    'title' => $blogPost->getTitle(),
+        //    'body' => $blogPost->getBody(),
+        // ];
+
+
+        // return new JsonResponse($formatted);
+        return $form;
+    }
+
+    /**
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Post("/blogposts/{id}/edit")
+     * @ParamConverter("blogPost", converter="fos_rest.request_body")
+     */
+    public function postBlogPostsAction(BlogPost $blogPost)
+    {
+        $blogPost = new BlogPost();
+        $form = $this->createForm(BlogPostType::class, $blogPost);
+
+        $form->submit($request->request->all()); // Validation des données
+
+        if ($form->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($blogPost);
+            $em->flush();
+            return $blogPost;
+        } else {
+            return $form;
+        }
+
+        // $blogPost->setTitle($request->get('title'))
+        //     ->setBody($request->get('body'));
+
+        // $em = $this->get('doctrine.orm.entity_manager');
+        // $em->persist($blogPost);
+        // $em->flush();
+
+        // return $blogPost;
+    }
+}
