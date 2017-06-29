@@ -1,0 +1,16 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block pageTitle %}Edit BlogPost{% endblock %}
+{% block body %}
+
+    <ul class="nav nav-pills nav-stacked">
+
+      <li>
+        <h3>id: {{ blogPost.id }}</h3>
+          {{ form(form) }}
+
+      </li>
+
+  </ul>
+{% endblock %}
+

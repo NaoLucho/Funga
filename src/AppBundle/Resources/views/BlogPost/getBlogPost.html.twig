@@ -1,0 +1,16 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block pageTitle %}BlogPosts{% endblock %}
+{% block body %}
+
+    <ul class="nav nav-pills nav-stacked">
+
+      <li>
+        <h3>{{ blogPost.title }}</h3>
+          <p>{{ blogPost.body }} </p>
+
+        <a href="{{ path('blogpost_edit', {'id': blogPost.id}) }}">edit</a>
+      </li>
+
+  </ul>
+{% endblock %}

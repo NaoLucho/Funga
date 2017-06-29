@@ -1,0 +1,10 @@
+AppBundle\Entity\BlogPost:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+    properties:
+        title:
+            - NotBlank: ~
+            - Type: string
+        body:
+            - NotBlank: ~
+            - Type: string

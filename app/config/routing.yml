@@ -2,6 +2,14 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
+# blogposts:
+#     type:     rest
+#     resource: AppBundle\Controller\BlogPostController
+
+# planification:
+#     type:     rest
+#     resource: AppBundle\Controller\PlanificationController
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

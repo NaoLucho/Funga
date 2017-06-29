@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
@@ -18,6 +18,8 @@ framework:
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
+    # serializer:
+    #     enabled: true
     #serializer: { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -79,6 +81,15 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
+        sonata.block.service.text: # used to if you plan to use Sonata user routes
 
 fos_user:
     db_driver:      orm # can be orm or odm
@@ -100,13 +111,44 @@ sonata_user:
     security_acl: true
     manager_type: orm # can be orm or mongodb
 
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        # enable the SonataAdminBundle block
-        sonata.admin.block.admin_list:
-            contexts: [admin]
-        sonata.user.block.menu:    # used to display the menu in profile pages
-        sonata.user.block.account: # used to display menu option (login option)
-        sonata.block.service.text: # used to if you plan to use Sonata user routes
+    table:
+        user_group: "fos_user_user_group"
 
+    impersonating:
+        route:                sonata_admin_dashboard
+        parameters:           { path: / }
+
+    class:                  # Entity Classes
+        user:               Application\Sonata\UserBundle\Entity\User
+        group:              Application\Sonata\UserBundle\Entity\Group
+
+    admin:                  # Admin Classes
+        user:
+            class:          Sonata\UserBundle\Admin\Entity\UserAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+
+        group:
+            class:          Sonata\UserBundle\Admin\Entity\GroupAdmin
+            controller:     SonataAdminBundle:CRUD
+            translation:    SonataUserBundle
+
+    profile:
+        default_avatar: 'bundles/sonatauser/default_avatar.png' # Default avatar displayed if user doesn't have one
+
+
+
+#sensio_framework_extra:
+#    view: { annotations: false }
+# sensio_framework_extra:
+#     request: { converters: true }
+#     view: { annotations: true }
+
+# fos_rest:
+#     body_converter:
+#         enabled: true
+#     view:
+#         view_response_listener: true
+#         formats: { json: true, xml: false, rss: false }
+#     serializer:
+#         serialize_null: true

@@ -1,0 +1,16 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block pageTitle %}Tasks{% endblock %}
+{% block body %}
+
+    <ul class="nav nav-pills nav-stacked">
+    {% for task in tasks %}
+      <li>
+        <h3>{{ task.title }}</h3>
+          <p>{{ task.body }} </p>
+
+
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
